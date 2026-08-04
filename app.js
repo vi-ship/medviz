@@ -25,7 +25,7 @@ ${last?`<h2>Продолжить</h2><div class="topic" id="continue"><div><b>${
 <h2 style="margin-top:24px">На повторение</h2><div class="list">${due.length?due.map(t=>`<div class="topic" data-open-topic="${t.subjectId}:${t.id}"><span>${t.name}</span><span class="pill">Сегодня</span></div>`).join(''):'<div class="notice">Пока нет тем, запланированных на повторение.</div>'}</div>`);
 bindSubjects();
 search.oninput=e=>{let q=e.target.value.toLowerCase();let f=active.filter(s=>s.name.toLowerCase().includes(q)||s.topics.some(t=>t.name.toLowerCase().includes(q)));subjects.innerHTML=subjectCards(f);bindSubjects()};
-if(last)continue.onclick=()=>{currentSubject=last.subjectId;currentTopic=last.id;page='topic';render()};
+if(last){const continueBtn=document.getElementById('continue');if(continueBtn)continueBtn.onclick=()=>{currentSubject=last.subjectId;currentTopic=last.id;page='topic';render()};}
 document.querySelectorAll('[data-open-topic]').forEach(b=>b.onclick=()=>{[currentSubject,currentTopic]=b.dataset.openTopic.split(':');page='topic';render()});
 }
 function catalog(){let active=state.subjects.filter(s=>!s.hidden&&!s.archived);shell(`<h1 style="margin-top:18px">Каталог</h1><div class="grid">${subjectCards(active)}</div>`);bindSubjects()}
